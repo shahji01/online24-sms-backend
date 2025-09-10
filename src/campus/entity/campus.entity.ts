@@ -15,19 +15,19 @@ export class Campus {
   address: string;
 
   @Column({ nullable: true })
-  contactNo: string;
+  contact_no: string;
 
   @Column()
-  schoolId: number;
+  school_id: number;
 
   @ManyToOne(() => School, (school) => school.campuses, { eager: true })
-  @JoinColumn({ name: 'schoolId' })
+  @JoinColumn({ name: 'school_id' })
   school: School;
 
   @OneToMany(() => Section, (section) => section.campus)
   sections: Section[];
 
-  @Column({ default: 1 })
+  @Column({ default: 1, comment:'1 = Active, 2 = Inactive' })
   status: number;
    static school: any;
 
