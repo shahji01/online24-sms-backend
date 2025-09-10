@@ -1,0 +1,47 @@
+// src/campus/campus.entity.ts
+import { Entity, PrimaryGeneratedColumn, Column, ManyToOne, JoinColumn, OneToMany, BeforeInsert } from 'typeorm';
+import { School } from '../../school/entity/school.entity';
+import { Section } from '../../section/entity/section.entity';
+
+@Entity('campuses')
+export class Campus {
+  @PrimaryGeneratedColumn()
+  id: number;
+
+  @Column()
+  name: string;
+
+  @Column({ nullable: true })
+  address: string;
+
+  @Column({ nullable: true })
+  contactNo: string;
+
+  @Column()
+  schoolId: number;
+
+  @ManyToOne(() => School, (school) => school.campuses, { eager: true })
+  @JoinColumn({ name: 'schoolId' })
+  school: School;
+
+  @OneToMany(() => Section, (section) => section.campus)
+  sections: Section[];
+
+  @Column({ default: 1 })
+  status: number;
+   static school: any;
+
+    @Column({ type: 'date' })
+    created_at: string;
+
+    @Column({ type: 'date' })
+    updated_at: string;
+    
+    @BeforeInsert()
+    setCreateDateParts() {
+        const today = new Date();
+        const dateOnly = today.toISOString().split('T')[0];
+        this.created_at = dateOnly;
+        this.updated_at = dateOnly;
+    }
+}

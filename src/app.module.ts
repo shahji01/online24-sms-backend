@@ -15,6 +15,10 @@ import { PermissionsModule } from './permissions/permissions.module';
 import { DatabaseModule } from './Database/database.module';
 import { LanguagesModule } from './languages/languages.module';
 import { LoggingModule } from './logging/logging.module';
+import { SchoolModule } from './school/school.module';
+import { CampusModule } from './campus/campus.module';
+import { ClassModule } from './class/class.module';
+import { SectionModule } from './section/section.module';
 @Module({
   imports: [
     ServeStaticModule.forRoot({
@@ -45,7 +49,11 @@ import { LoggingModule } from './logging/logging.module';
     PermissionsModule,
     DatabaseModule,
     LanguagesModule,
-    LoggingModule
+    LoggingModule,
+    SchoolModule,
+    CampusModule,
+    ClassModule,
+    SectionModule
   ],
 
 })
