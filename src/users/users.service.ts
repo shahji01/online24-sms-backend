@@ -36,7 +36,7 @@ export class UsersService {
       const user = await this.usersRepository.findOne({
         where: { email },
 
-        select: ['id', 'name', 'email', 'image', 'password', 'status', 'phone', 'dob', 'address', 'created_date'] // Explicitly select fields
+        select: ['id','type', 'name', 'email', 'image', 'password', 'status', 'phone', 'dob', 'address', 'created_date'] // Explicitly select fields
       });
 
       return user || null; // Explicitly return null if not found
@@ -111,6 +111,7 @@ export class UsersService {
       .where('user.id = :id', { id }) // <- only works if `id` is a number and matches
       .select([
         'user.id AS id',
+        'user.type AS type',
         'user.name AS name',
         'user.email AS email',
         'user.phone AS phone',
@@ -141,6 +142,7 @@ export class UsersService {
       .innerJoin('user_roles', 'role', 'role.id = user.role_id')
       .select([
         'user.id        AS id',
+        'user.type      AS type',
         'user.name      AS name',
         'user.email     AS email',
         'user.phone     AS phone',

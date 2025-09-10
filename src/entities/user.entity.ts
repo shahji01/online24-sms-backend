@@ -1,14 +1,15 @@
 // src/users/entities/user.entity.ts
-import { Entity, PrimaryGeneratedColumn, Column, OneToMany, BeforeInsert, ManyToMany, JoinTable } from 'typeorm';
+import { Entity, PrimaryGeneratedColumn, Column, OneToMany, BeforeInsert, ManyToMany, JoinTable, ManyToOne, JoinColumn } from 'typeorm';
 import { Role } from './role.entity';
 import { Permission } from './Permission.entity';
+import { School } from 'src/school/entity/school.entity';
 
 @Entity()
 export class User {
   @PrimaryGeneratedColumn()
   id: number;
 
-  @Column({ type:'int', nullable: true, default: 2, comment: '1 = Admin, 2 User'})
+  @Column({ type:'int', nullable: true, default: 2, comment: '1 = Admin, 2 = School, 3 = Campus, 4 = User'})
   type: number;
 
   @Column({ length: 5, nullable: true })
@@ -95,4 +96,8 @@ export class User {
     },
   })
   permissions: Permission[];
+
+  @ManyToOne(() => School, (school) => school.users, { nullable: true })
+  @JoinColumn({ name: 'school_id' })
+  school: School;
 }

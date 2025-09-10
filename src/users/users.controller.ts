@@ -96,6 +96,7 @@ export class UsersController {
 
     const userDetails = {
       id: user.id,
+      type: user.type,
       name: user.name,
       image: user.image ?? '',
       email: user.email ?? '',

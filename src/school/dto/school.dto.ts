@@ -1,4 +1,4 @@
-import { IsInt, IsNotEmpty, IsString } from 'class-validator';
+import { IsEmail, IsInt, IsNotEmpty, IsString } from 'class-validator';
 
 export class CreateSchoolDto {
  @IsNotEmpty({ message: 'School name cannot be emoty' })
@@ -12,5 +12,9 @@ export class CreateSchoolDto {
   @IsNotEmpty({ message: 'Contact cannot be empty' })
   @IsString({ message: 'Contact number must be a string' })
   contact_no: string;
+
+  @IsNotEmpty({ message: 'Admin email cannot be empty' })
+  @IsEmail({}, { message: 'Admin email must be valid' })
+  admin_email: string;
 
 }

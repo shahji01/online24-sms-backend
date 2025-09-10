@@ -1,6 +1,7 @@
 
 import { Entity, PrimaryGeneratedColumn, Column, OneToMany, BeforeInsert } from 'typeorm';
 import { Campus } from '../../campus/entity/campus.entity';
+import { User } from 'src/entities/user.entity';
 
 @Entity('schools')
 export class School {
@@ -35,4 +36,7 @@ export class School {
         this.created_at = dateOnly;
         this.updated_at = dateOnly;
     }
+
+    @OneToMany(() => User, (user) => user.school)
+    users: User[];
 }
