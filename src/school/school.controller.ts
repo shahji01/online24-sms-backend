@@ -1,8 +1,8 @@
-import { Body, Controller, Param, Post, Put } from '@nestjs/common';
+import { BadRequestException, Body, Controller, NotFoundException, Param, Patch, Post, Put, Req } from '@nestjs/common';
 import { CreateSchoolDto } from './dto/school.dto';
 import { SchoolService } from './school.service';
 
-@Controller('school')
+@Controller('schools')
 export class SchoolController {
   constructor(private readonly schoolService: SchoolService) {}
 
@@ -72,19 +72,16 @@ export class SchoolController {
     }
   }
 
-  @Post('active-and-inactive')
-  async softDelete(@Body() body) {
-    try {
-      await this.schoolService.softDelete(body);
-      return {
-        status: true,
-        message: `School ${body.status === 1 ? 'Activated' : 'Deactivated'} Successfully`,
-      };
-    } catch (e) {
-      return {
-        status: false,
-        message: e.message || 'Failed to update status',
-      };
-    }
+  @Patch('toggle/:id')
+  async toggleStatus(
+    @Param('id') id: string,
+    @Req() req,
+  ) {
+    const userId = req.user?.userId;
+
+    const updated = await this.schoolService.toggleStatus(+id, userId);
+    if (!updated) throw new NotFoundException('Record not found');
+
+    return { message: 'Status updated successfully', data: updated };
   }
 }

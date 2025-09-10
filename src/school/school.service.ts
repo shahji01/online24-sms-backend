@@ -31,7 +31,21 @@ export class SchoolService {
         console.log(id)
         await this.schoolRepo.update(id, dto);
     }
-    async softDelete(body:any){
-         return await this.schoolRepo.update({ id: body.id }, { status: body.status });
+    async toggleStatus(
+        id: number,
+        userId: number,
+    ): Promise<any | null> {
+        const school = await this.schoolRepo.findOne({ where: { id } });
+        if (!school) return null;
+
+        const oldValue = school.status;
+        const newValue = oldValue === 1 ? 2 : 1;
+
+        school.status = newValue;
+
+        const saved = await this.schoolRepo.save(school);
+
+        // optional: add audit log here using oldValue, newValue, userId, lang
+        return saved;
     }
 }

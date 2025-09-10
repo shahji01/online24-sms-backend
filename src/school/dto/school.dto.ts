@@ -11,6 +11,6 @@ export class CreateSchoolDto {
 
   @IsNotEmpty({ message: 'Contact cannot be empty' })
   @IsString({ message: 'Contact number must be a string' })
-  contactNo: string;
+  contact_no: string;
 
 }

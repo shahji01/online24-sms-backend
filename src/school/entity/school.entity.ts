@@ -14,12 +14,12 @@ export class School {
   address: string;
 
   @Column({ nullable: true })
-  contactNo: string;
+  contact_no: string;
 
   @OneToMany(() => Campus, (campus) => Campus.school)
   campuses: Campus[];
 
-  @Column({ default: 1 })
+  @Column({ default: 1, comment: '1 = Active, 2 = Inactive' })
   status: number;
 
   @Column({ type: 'date' })
